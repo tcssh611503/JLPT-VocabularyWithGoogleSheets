@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'views/prod.dart';
 import 'controller/controller.dart';
 import 'model/dataType.dart';
+import 'config/router.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,12 +14,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'japanese vocabulary Home'),
+      //old
+      // home: MyHomePage(title: 'japanese vocabulary Home'),
+      //use router
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
       debugShowCheckedModeBanner: false,
     );
   }
 }
-
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -75,12 +79,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 RaisedButton(
                   color: Colors.lightBlueAccent,
                   textColor: Colors.black,
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => prod(),
-                        ));
+                  // without router
+                  // onPressed: () {
+                  //   Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //         builder: (context) => prod(),
+                  //       ));
+                  // },
+
+                    onPressed:(){
+                    //pushing a router directly , using a named route
+                    Navigator.of(context).pushNamed(
+                      '/prod',
+                      // 路徑錯誤
+                      // '/error',
+                      arguments:  Data(homeList[index].kannji, homeList[index].gojuuon ,homeList[index].imi, homeList[index].sentence),
+                      // 參數錯誤
+                      // arguments:123456789
+                    );
                   },
                   child: Text('詳細'),
                 )
@@ -94,6 +111,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-
-///

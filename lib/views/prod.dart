@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
-
+import 'package:google_sheets_app/main.dart';
 import '../controller/controller.dart';
 import '../model/dataType.dart';
 
 class prod extends StatelessWidget {
+
+   final Data data;
+
+     prod({
+    Key key,
+    @required this.data,
+  }) :super(key:key);
+
+
+
+  String gojuuon;
+  String imi;
+  String sentence;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -11,15 +25,18 @@ class prod extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: FeedbackListPage(title: "Responses"),
+        home: FeedbackListPage(title: data.kannji ,  gojuuon: data.gojuuon,  imi:data.imi , sentence:data.sentence),
         debugShowCheckedModeBanner: false,);
   }
 }
 
 class FeedbackListPage extends StatefulWidget {
-  FeedbackListPage({Key key, this.title}) : super(key: key);
+  FeedbackListPage({Key key, this.title , this.gojuuon ,this.imi, this.sentence}) : super(key: key);
 
-  final String title;
+  final String title ;  
+  final String gojuuon;
+  final String imi;
+  final String sentence;
 
   @override
   _FeedbackListPageState createState() => _FeedbackListPageState();
@@ -48,38 +65,42 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
         title: Text(widget.title),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+                // RaisedButton(
+                //   color: Colors.lightBlueAccent,
+                //   textColor: Colors.black,
+                //   // without router
+                //   // onPressed: () {
+                //   //   Navigator.push(
+                //   //       context,
+                //   //       MaterialPageRoute(
+                //   //         builder: (context) => prod(),
+                //   //       ));
+                //   // },
+                // onPressed:(){
+                //   //pushing a router directly , using a named route
+                //     MaterialPageRoute(
+                //       builder: (context) =>
+                //         MyHomePage(title: 'japanese vocabulary Home'),
+                //     );
+                // } , 
+                //   child: Text('回首頁'),
+                // ),
           Text(
-            '繋がる',
+            widget.gojuuon,
             style: TextStyle(fontSize: 16.0, color: Colors.grey[900]),
           ),
           Text(
-            '噛み付く',
+            widget.sentence,
             style: TextStyle(fontSize: 16.0, color: Colors.grey[900]),
           ),
-          Text(
-            '満つ',
-            style: TextStyle(fontSize: 16.0, color: Colors.grey[900]),
-          ),
-          Text(
-            '庇う',
-            style: TextStyle(fontSize: 16.0, color: Colors.grey[900]),
-          ),
-          Text(
-            '臨む',
-            style: TextStyle(fontSize: 16.0, color: Colors.grey[900]),
-          ),
-          Text(
-            '構う',
-            style: TextStyle(fontSize: 16.0, color: Colors.grey[900]),
-          ),
-          Text(
-            '関わる',
-            style: TextStyle(fontSize: 16.0, color: Colors.grey[900]),
-          ),
+          
+         
         ],
       ),
     );
   }
 }
+
+

@@ -24,3 +24,15 @@ class DataList {
         'sentence': sentence
       };
 }
+
+
+class Data {
+  String kannji;
+  String gojuuon;
+  String imi;
+  String sentence;
+
+  Data(this.kannji, this.gojuuon, this.imi, this.sentence);
+
+  
+}
