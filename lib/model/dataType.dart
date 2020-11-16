@@ -1,14 +1,14 @@
-/// FeedbackForm is a data class which stores data fields of Feedback.
-class FeedbackForm {
+// DataList is a data class which stores data fields of Feedback.
+class DataList {
   String kannji;
   String gojuuon;
   String imi;
   String sentence;
 
-  FeedbackForm(this.kannji, this.gojuuon, this.imi, this.sentence);
+  DataList(this.kannji, this.gojuuon, this.imi, this.sentence);
 
-  factory FeedbackForm.fromJson(dynamic json) {
-    return FeedbackForm(
+  factory DataList.fromJson(dynamic json) {
+    return DataList(
         "${json['kannji']}",
         "${json['gojuuon']}",
         "${json['imi']}",

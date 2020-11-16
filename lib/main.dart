@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'controller/form_controller.dart';
-import 'model/form.dart';
-
-
-
+import 'views/prod.dart';
+import 'controller/controller.dart';
+import 'model/dataType.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,6 +19,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -31,52 +30,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a `GlobalKey<FormState>`,
-  // not a GlobalKey<MyCustomFormState>.
-  final _formKey = GlobalKey<FormState>();
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // TextField Controllers
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController mobileNoController = TextEditingController();
-  TextEditingController feedbackController = TextEditingController();
-
-  // Method to Submit Feedback and save it in Google Sheets
-  List<FeedbackForm> feedbackItems = List<FeedbackForm>();
-
-  // Method to Submit Feedback and save it in Google Sheets
+  // 宣告一個叫homeList的DataList物件
+  List<DataList> homeList = List<DataList>();
 
   @override
+  //get Data
   void initState() {
     super.initState();
 
-    FormController().getFeedbackList().then((feedbackItems) {
+    GetDataController().getDataListFu().then((dataList) {
       setState(() {
-        this.feedbackItems = feedbackItems;
+        this.homeList = dataList;
       });
     });
-  }
-
-  // Method to show snackbar with 'message'.
-  _showSnackbar(String message) {
-    final snackBar = SnackBar(content: Text(message));
-    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text(widget.title),
       ),
         body: ListView.builder(
-        itemCount: feedbackItems.length,
+        itemCount: homeList.length,
         itemBuilder: (context, index) {
           return ListTile(
             title: Row(
@@ -84,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 // Icon(Icons.person),
                 Expanded(
                   child: Text(
-                      "${feedbackItems[index].kannji} (${feedbackItems[index].gojuuon})"),
+                      "${homeList[index].kannji} (${homeList[index].gojuuon})"),
                 )
               ],
             ),
@@ -92,17 +70,27 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 Icon(Icons.message),
                 Expanded(
-                  child: Text(feedbackItems[index].sentence),
+                  child: Text(homeList[index].sentence),
+                ),
+                RaisedButton(
+                  color: Colors.lightBlueAccent,
+                  textColor: Colors.black,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => prod(),
+                        ));
+                  },
+                  child: Text('詳細'),
                 )
               ],
             ),
+
           );
         },
-      ),
-      
-    
-
-
+      )
+                
     );
   }
 }
